@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Diagnostics.Contracts;
 
- class SayaTubeVideo
+class SayaTubeVideo
 {
     private int id;
     private string title;
@@ -9,10 +11,27 @@
 
     public SayaTubeVideo( string title)
     {
-        Random random = new Random();
-        this.id = random.Next(10000, 99999);
-        this.playCount = 0;
-        this.title = title;
+
+        Debug.Assert(title != null, "Title tidak boleh null");
+
+        Debug.Assert(title.Length <= 200, "Title maksimal 200 karakter");
+        try
+        {
+           
+
+            checked
+            {
+                Random random = new Random();
+                this.id = random.Next(10000, 99999);
+                this.playCount = 0;
+                this.title = title;
+            }
+        }
+        catch { }
+        {
+            Console.WriteLine("Error prekondisi");
+        }
+        
 
     }
 
@@ -28,8 +47,21 @@
 
     public void IncreasePlayCount(int playCount)
     {
+        Contract.Assert(playCount <= 25000000);
+        Contract.Assert(playCount >= 0);
 
-        this.playCount += playCount;
+        try
+        {
+            checked
+            {
+                this.playCount += playCount;
+            }
+        }
+        catch (Exception)
+        {
+            Console.WriteLine("Inputtan Playcount tidak valid");
+        }
+        
 
     }
 
@@ -38,6 +70,7 @@
         Console.WriteLine("ID: " + this.id);
         Console.WriteLine("Judul: " + this.title);
         Console.WriteLine("Play Count: " + this.playCount);
+        Console.WriteLine(" ");
     }
    
 }

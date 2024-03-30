@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
 using System.Numerics;
 
 class SayaTubeUser
@@ -11,6 +12,8 @@ class SayaTubeUser
 
 	public SayaTubeUser(string username)
 	{
+		Contract.Assert(!string.IsNullOrEmpty(username));
+		Contract.Assert(username.Length <= 100);
 		this.Username = username;
 		this.uploadedVideos = new List<SayaTubeVideo>();
 
@@ -36,20 +39,28 @@ class SayaTubeUser
 
 	public void AddVideo(SayaTubeVideo video)
 	{
-		int i = this.uploadedVideos.Count + 1;
+		Contract.Assert(video != null);
+		Contract.Assert(this.uploadedVideos.Count <= 25000000);
+
+
+        int i = this.uploadedVideos.Count + 1;
+
 
 		this.uploadedVideos.Add(video);
 	}
 
 	public void PrintAllVideoPlayCount()
 	{
+		int i;
         Console.WriteLine("User: " + this.Username);
-		for (int i = 0; i < this.uploadedVideos.Count; i++)
+		for (i = 0; i < this.uploadedVideos.Count; i++)
 		{
 
 
-			Console.WriteLine("Video " + (i+1) + "judul: " + uploadedVideos[i].GetTitle);
+			Console.WriteLine("Video " + (i+1) + "judul: " + uploadedVideos[i].GetTitle());
 		}
+
+		Contract.Ensures(i < 8, "Video maksimal 8");
 		}
 
 }

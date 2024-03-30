@@ -5,8 +5,9 @@ public class Program
     public static void Main(string[] args)
     {
         SayaTubeVideo[] video = new SayaTubeVideo[9];
+        int i;
 
-         video[0] = new SayaTubeVideo("Mission Impossible:Ghost Protocol");
+        video[0] = new SayaTubeVideo("Mario Movie");
 
         video[1] = new SayaTubeVideo("Oppenheimer");
 
@@ -24,18 +25,31 @@ public class Program
 
         video[8] = new SayaTubeVideo("Kung Fu Panda 2");
 
-        video[9] = new SayaTubeVideo("Mario Movie");
 
 
         SayaTubeUser user = new SayaTubeUser("Farhan");
+        SayaTubeUser user2 = new SayaTubeUser("Adit");
 
-        for (int i = 0; i < 10; i++)
+        for (i = 0; i < video.Length; i++) {
+            user.AddVideo(video[i]);
+          }
+
+        for ( i = 0; i < video.Length; i++)
         {
-            Console.WriteLine("Review Film" + video[i].GetTitle + "oleh " + user.Username);
+            Console.WriteLine("Review Film" + video[i].GetTitle() + "oleh " + user.Username);
             Console.WriteLine(" ");
 
         }
 
+        user2.PrintAllVideoPlayCount();
+
+        for (i = 0; i < 214; i++)
+        {
+            video[8].IncreasePlayCount(10000001);
+        }
+        video[8].IncreasePlayCount(10000001);
+
+        video[9] = new SayaTubeVideo(null);
 
     }
 }
